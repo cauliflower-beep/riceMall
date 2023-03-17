@@ -10,7 +10,9 @@ import (
 	"mall/middleware"
 )
 
-// 路由配置
+// NewRouter
+//  @Description: 路由配置
+//  @return *gin.Engine
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 	store := cookie.NewStore([]byte("something-very-secret"))

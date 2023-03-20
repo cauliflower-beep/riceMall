@@ -8,7 +8,7 @@ var MsgFlags = map[int]string{
 	InvalidParams:         "请求参数错误",
 
 	ErrorExistNick:          "已存在该昵称",
-	ErrorExistUser:          "已存在该用户名",
+	ErrorExistUser:          "用户名已存在，换个其他的试试吧~",
 	ErrorNotExistUser:       "该用户不存在",
 	ErrorNotCompare:         "账号密码错误",
 	ErrorNotComparePassword: "两次密码输入不一致",

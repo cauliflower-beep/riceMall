@@ -27,11 +27,11 @@ const (
 	ErrorBossInsufficientAuthority = 20005
 	ErrorBossProduct               = 20006
 
-	// 购物车
+	// ErrorProductExistCart 购物车
 	ErrorProductExistCart = 20007
 	ErrorProductMoreCart  = 20008
 
-	//管理员错误
+	// ErrorAuthCheckTokenFail 管理员错误
 	ErrorAuthCheckTokenFail        = 30001 //token 错误
 	ErrorAuthCheckTokenTimeout     = 30002 //token 过期
 	ErrorAuthToken                 = 30003
@@ -42,7 +42,7 @@ const (
 	ErrorCallApi                   = 30008
 	ErrorUnmarshalJson             = 30009
 	ErrorAdminFindUser             = 30010
-	//数据库错误
+	// ErrorDatabase 数据库错误
 	ErrorDatabase = 40001
 
 	//对象存储错误

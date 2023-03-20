@@ -58,8 +58,8 @@ func Init() {
 	LoadEs(file)
 	LoadPhotoPath(file)
 	LoadRabbitMQ(file)
-	if err := LoadLocales("conf/locales/zh-cn.yaml"); err != nil {
-		logging.Info(err) // 日志内容
+	if err = LoadLocales("conf/locales/zh-cn.yaml"); err != nil {
+		logging.Info(err)
 		panic(err)
 	}
 	// MySQL
@@ -73,6 +73,8 @@ func Init() {
 	// model.RabbitMQ(pathRabbitMQ)
 }
 
+// LoadServer
+//  @Description: 服务器配置
 func LoadServer(file *ini.File) {
 	AppMode = file.Section("service").Key("AppMode").String()
 	HttpPort = file.Section("service").Key("HttpPort").String()

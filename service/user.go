@@ -33,6 +33,11 @@ type SendEmailService struct {
 type ValidEmailService struct {
 }
 
+// Register
+//  @Description: 用户注册
+//  @receiver service
+//  @param ctx
+//  @return serializer.Response
 func (service UserService) Register(ctx context.Context) serializer.Response {
 	var user *model.User
 	code := e.SUCCESS
@@ -44,6 +49,7 @@ func (service UserService) Register(ctx context.Context) serializer.Response {
 			Data:   "密钥长度不足",
 		}
 	}
+
 	util.Encrypt.SetKey(service.Key)
 	userDao := dao.NewUserDao(ctx)
 	_, exist, err := userDao.ExistOrNotByUserName(service.UserName)

@@ -15,13 +15,16 @@ import (
 //  @return *gin.Engine
 func NewRouter() *gin.Engine {
 	r := gin.Default()
-	store := cookie.NewStore([]byte("something-very-secret"))
+
+	// 增设全局中间件
 	r.Use(middleware.Cors())
+	store := cookie.NewStore([]byte("something-very-secret"))
 	r.Use(sessions.Sessions("mysession", store))
+
 	r.StaticFS("/static", http.Dir("./static"))
 	v1 := r.Group("api/v1")
 	{
-
+		// 后台接口测试
 		v1.GET("ping", func(c *gin.Context) {
 			c.JSON(200, "success")
 		})

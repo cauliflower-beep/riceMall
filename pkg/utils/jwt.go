@@ -5,10 +5,11 @@ import (
 	"time"
 )
 
+// JWT签名密钥(不能泄露的东西)
 var jwtSecret = []byte("FanOne")
 
 type Claims struct {
-	ID 		  uint 	`json:"id"`
+	ID        uint   `json:"id"`
 	Username  string `json:"username"`
 	Authority int    `json:"authority"`
 	jwt.StandardClaims
@@ -16,17 +17,23 @@ type Claims struct {
 
 //GenerateToken 签发用户Token
 func GenerateToken(id uint, username string, authority int) (string, error) {
-	nowTime := time.Now()
-	expireTime := nowTime.Add(24 * time.Hour)
+	expireTime := time.Now().Add(24 * time.Hour)
+	// 设置jwt的载荷(payload),可以包含任意用户信息
 	claims := Claims{
-		ID:id,
+		ID:        id,
 		Username:  username,
 		Authority: authority,
+		//Email: "xxxxxxxxx@qq.com",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "mall",
 		},
 	}
+	// 设置jwt头部信息，用以验证token有效性 todo
+	/*
+		jwt也是token的实现方式之一,使用json格式和数字签名来实现token的安全性和可靠性
+		它与传统的session验证机制不同：不需要服务器在后端存储token信息
+	*/
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(jwtSecret)
 	return token, err

@@ -16,6 +16,10 @@ var (
 	_db *gorm.DB
 )
 
+// Database
+//  @Description: 初始化数据库链接
+//  @param connRead
+//  @param connWrite
 func Database(connRead, connWrite string) {
 	var ormLogger logger.Interface
 	if gin.Mode() == "debug" {
@@ -24,12 +28,12 @@ func Database(connRead, connWrite string) {
 		ormLogger = logger.Default
 	}
 	db, err := gorm.Open(mysql.New(mysql.Config{
-		DSN:                       connRead, // DSN data source name
-		DefaultStringSize:         256,      // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,     // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,     // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,     // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,    // 根据版本自动配置
+		DSN:                      connRead, // DSN data source name
+		DefaultStringSize:        256,      // string 类型字段的默认长度
+		DisableDatetimePrecision: true,     // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
+		DontSupportRenameIndex:   true,     // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
+		//DontSupportRenameColumn:   true,     // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
+		SkipInitializeWithVersion: false, // 根据版本自动配置
 	}), &gorm.Config{
 		Logger: ormLogger,
 		NamingStrategy: schema.NamingStrategy{
@@ -39,18 +43,19 @@ func Database(connRead, connWrite string) {
 	if err != nil {
 		panic(err)
 	}
-	sqlDB, _ := db.DB()
+	sqlDB, _ := db.DB()        // 创建数据库连接池 sqlDB也是实际操作数据库的句柄.
 	sqlDB.SetMaxIdleConns(20)  //设置连接池，空闲
-	sqlDB.SetMaxOpenConns(100) //打开
+	sqlDB.SetMaxOpenConns(100) //最多同时存在的连接数
 	sqlDB.SetConnMaxLifetime(time.Second * 30)
+
+	// 多个数据库支持
 	_db = db
-	_ = _db.Use(dbresolver.
-		Register(dbresolver.Config{
-			// `db2` 作为 sources，`db3`、`db4` 作为 replicas
-			Sources:  []gorm.Dialector{mysql.Open(connRead)},                         // 写操作
-			Replicas: []gorm.Dialector{mysql.Open(connWrite), mysql.Open(connWrite)}, // 读操作
-			Policy:   dbresolver.RandomPolicy{},                                      // sources/replicas 负载均衡策略
-		}))
+	_ = _db.Use(dbresolver.Register(dbresolver.Config{
+		// `connRead` 作为 sources，`connWrite` 作为 replicas
+		Sources:  []gorm.Dialector{mysql.Open(connRead)},                         // 写操作
+		Replicas: []gorm.Dialector{mysql.Open(connWrite), mysql.Open(connWrite)}, // 读操作
+		Policy:   dbresolver.RandomPolicy{},                                      // sources/replicas 负载均衡策略
+	}))
 	Migration()
 }
 

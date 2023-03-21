@@ -7,13 +7,12 @@ import (
 	"time"
 )
 
-//JWT token验证中间件
+//JWT 中间件-token验证
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var code int
+		code := 200
 		var data interface{}
-		code = 200
-		token := c.GetHeader("Authorization")
+		token := c.GetHeader("Authorization") // 头部必须携带正确的token信息
 		if token == "" {
 			code = 404
 		} else {
@@ -37,7 +36,7 @@ func JWT() gin.HandlerFunc {
 	}
 }
 
-//JWTAdmin token验证中间件
+//JWTAdmin 中间件-token验证
 func JWTAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var code int

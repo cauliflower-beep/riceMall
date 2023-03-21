@@ -131,8 +131,10 @@ func (service *UserService) Login(ctx context.Context) serializer.Response {
 	}
 	return serializer.Response{
 		Status: code,
-		Data:   serializer.TokenData{User: serializer.BuildUser(user), Token: token},
-		Msg:    e.GetMsg(code),
+		// 登录成功后，需返回token信息
+		// 后续需要签名验证的操作-修改数据等，请求headers需要携带该签名
+		Data: serializer.TokenData{User: serializer.BuildUser(user), Token: token},
+		Msg:  e.GetMsg(code),
 	}
 }
 

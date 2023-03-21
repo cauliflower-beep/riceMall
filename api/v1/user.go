@@ -6,27 +6,28 @@ import (
 	"mall/service"
 )
 
+// UserRegister
+//  @Description: 用户注册接口
+//  @param c
 func UserRegister(c *gin.Context) {
 	var userRegisterService service.UserService //相当于创建了一个UserRegisterService对象，调用这个对象中的Register方法。
-	if err := c.ShouldBind(&userRegisterService); err == nil {
-		res := userRegisterService.Register(c.Request.Context())
-		c.JSON(200, res)
-	} else {
+	if err := c.ShouldBind(&userRegisterService); err != nil {
 		c.JSON(400, ErrorResponse(err))
 		util.LogrusObj.Infoln(err)
 	}
+	res := userRegisterService.Register(c.Request.Context())
+	c.JSON(200, res)
 }
 
 //UserLogin 用户登陆接口
 func UserLogin(c *gin.Context) {
 	var userLoginService service.UserService
-	if err := c.ShouldBind(&userLoginService); err == nil {
-		res := userLoginService.Login(c.Request.Context())
-		c.JSON(200, res)
-	} else {
+	if err := c.ShouldBind(&userLoginService); err != nil {
 		c.JSON(400, ErrorResponse(err))
 		util.LogrusObj.Infoln(err)
 	}
+	res := userLoginService.Login(c.Request.Context())
+	c.JSON(200, res)
 }
 
 func UserUpdate(c *gin.Context) {

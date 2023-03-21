@@ -6,7 +6,8 @@ import (
 	"mall/service"
 )
 
-// 创建商品
+// CreateProduct
+//  @Description: 创建商品接口
 func CreateProduct(c *gin.Context) {
 	form, _ := c.MultipartForm()
 	files := form.File["file"]
@@ -22,16 +23,16 @@ func CreateProduct(c *gin.Context) {
 	}
 }
 
-//商品列表
+// ListProducts
+//  @Description: 商品列表
 func ListProducts(c *gin.Context) {
 	listProductsService := service.ProductService{}
-	if err := c.ShouldBind(&listProductsService); err == nil {
-		res := listProductsService.List(c.Request.Context())
-		c.JSON(200, res)
-	} else {
+	if err := c.ShouldBind(&listProductsService); err != nil {
 		c.JSON(400, ErrorResponse(err))
 		util.LogrusObj.Infoln(err)
 	}
+	res := listProductsService.List(c.Request.Context())
+	c.JSON(200, res)
 }
 
 //商品详情

@@ -52,7 +52,6 @@ func ParseToken(token string) (*Claims, error) {
 	return nil, err
 }
 
-//EmailClaims
 type EmailClaims struct {
 	UserID        uint   `json:"user_id"`
 	Email         string `json:"email"`

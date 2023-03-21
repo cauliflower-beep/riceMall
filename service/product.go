@@ -13,7 +13,8 @@ import (
 	"mall/serializer"
 )
 
-// 更新商品的服务
+// ProductService
+// @Description: 更新商品的服务
 type ProductService struct {
 	ID            uint   `form:"id" json:"id"`
 	Name          string `form:"name" json:"name"`
@@ -56,7 +57,13 @@ func (service *ProductService) Show(ctx context.Context, id string) serializer.R
 	}
 }
 
-// 创建商品
+// Create
+//  @Description: 创建商品服务
+//  @receiver service
+//  @param ctx
+//  @param uId
+//  @param files
+//  @return serializer.Response
 func (service *ProductService) Create(ctx context.Context, uId uint, files []*multipart.FileHeader) serializer.Response {
 	var boss *model.User
 	var err error
@@ -101,7 +108,7 @@ func (service *ProductService) Create(ctx context.Context, uId uint, files []*mu
 		}
 	}
 
-	wg := new(sync.WaitGroup)
+	var wg sync.WaitGroup
 	wg.Add(len(files))
 	for index, file := range files {
 		num := strconv.Itoa(index)
@@ -141,6 +148,11 @@ func (service *ProductService) Create(ctx context.Context, uId uint, files []*mu
 	}
 }
 
+// List
+//  @Description: 商品列表服务
+//  @receiver service
+//  @param ctx
+//  @return serializer.Response
 func (service *ProductService) List(ctx context.Context) serializer.Response {
 	var products []*model.Product
 	var total int64

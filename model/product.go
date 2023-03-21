@@ -6,7 +6,8 @@ import (
 	"strconv"
 )
 
-//商品模型
+// Product
+// @Description: 商品模型
 type Product struct {
 	gorm.Model
 	Name          string `gorm:"size:255;index"`

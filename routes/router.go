@@ -41,10 +41,9 @@ func NewRouter() *gin.Engine {
 		v1.GET("categories", api.ListCategories) // 商品分类
 		v1.GET("carousels", api.ListCarousels)   // 轮播图
 
-		authed := v1.Group("/") // 需要登陆保护
+		authed := v1.Group("/") // 需要登陆保护 token验证
 		authed.Use(middleware.JWT())
 		{
-
 			// 用户操作
 			authed.PUT("user", api.UserUpdate)
 			authed.POST("user/sending-email", api.SendEmail)

@@ -9,7 +9,13 @@ import (
 	"strconv"
 )
 
-// UploadProductToLocalStatic 上传到本地文件中
+// UploadProductToLocalStatic
+//  @Description: 上传到本地文件夹
+//  @param file
+//  @param bossId
+//  @param productName
+//  @return filePath
+//  @return err
 func UploadProductToLocalStatic(file multipart.File, bossId uint, productName string) (filePath string, err error) {
 	bId := strconv.Itoa(int(bossId))
 	basePath := "." + conf.ProductPhotoPath + "boss" + bId + "/"
@@ -47,19 +53,20 @@ func UploadAvatarToLocalStatic(file multipart.File, userId uint, userName string
 	return "user" + bId + "/" + userName + ".jpg", err
 }
 
-// DirExistOrNot 判断文件是否存在
+// DirExistOrNot
+//  @Description: 判断文件夹是否存在
 func DirExistOrNot(fileAddr string) bool {
 	s, err := os.Stat(fileAddr)
 	if err != nil {
 		log.Println(err)
 		return false
 	}
-	return s.IsDir()
+	return s.IsDir() // 判断所给路径是否为文件夹
 }
 
 // CreateDir 创建文件夹
 func CreateDir(dirName string) bool {
-	err := os.MkdirAll(dirName, 755)
+	err := os.MkdirAll(dirName, 755) // 新建一个目录 perm为权限位
 	if err != nil {
 		log.Println(err)
 		return false

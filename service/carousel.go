@@ -11,6 +11,8 @@ import (
 type ListCarouselsService struct {
 }
 
+// List
+//  @Description:轮播图服务
 func (service *ListCarouselsService) List() serializer.Response {
 	code := e.SUCCESS
 	carouselsCtx := dao.NewCarouselDao(context.Background())

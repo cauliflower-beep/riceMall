@@ -6,6 +6,8 @@ import (
 	"mall/service"
 )
 
+// ListCarousels
+//  @Description:轮播图接口
 func ListCarousels(c *gin.Context) {
 	listCarouselsService := service.ListCarouselsService{}
 	if err := c.ShouldBind(&listCarouselsService); err == nil {

@@ -32,7 +32,8 @@ type ProductService struct {
 type ListProductImgService struct {
 }
 
-// 商品
+// Show
+//  @Description: 商品详情服务
 func (service *ProductService) Show(ctx context.Context, id string) serializer.Response {
 	code := e.SUCCESS
 
@@ -159,9 +160,9 @@ func (service *ProductService) List(ctx context.Context) serializer.Response {
 	code := e.SUCCESS
 
 	if service.PageSize == 0 {
-		service.PageSize = 15
+		service.PageSize = 15 // 默认每页展示15个商品
 	}
-	condition := make(map[string]interface{})
+	condition := make(map[string]interface{}) // 存储查询条件
 	if service.CategoryID != 0 {
 		condition["category_id"] = service.CategoryID
 	}
@@ -174,6 +175,7 @@ func (service *ProductService) List(ctx context.Context) serializer.Response {
 			Msg:    e.GetMsg(code),
 		}
 	}
+	// 这里的goroutine添加的完全没有意义...
 	wg := new(sync.WaitGroup)
 	wg.Add(1)
 	go func() {
@@ -240,7 +242,8 @@ func (service *ProductService) Update(ctx context.Context, pId string) serialize
 	}
 }
 
-// 搜索商品
+// Search
+//  @Description: 搜索商品服务
 func (service *ProductService) Search(ctx context.Context) serializer.Response {
 	code := e.SUCCESS
 	if service.PageSize == 0 {

@@ -23,7 +23,8 @@ type Product struct {
 	BossAvatar    string `json:"boss_avatar"`
 }
 
-// 序列化商品
+// BuildProduct
+//  @Description: 序列化商品
 func BuildProduct(item *model.Product) Product {
 	return Product{
 		ID:            item.ID,

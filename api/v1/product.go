@@ -24,7 +24,7 @@ func CreateProduct(c *gin.Context) {
 }
 
 // ListProducts
-//  @Description: 商品列表
+//  @Description: 商品列表接口
 func ListProducts(c *gin.Context) {
 	listProductsService := service.ProductService{}
 	if err := c.ShouldBind(&listProductsService); err != nil {
@@ -35,7 +35,8 @@ func ListProducts(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-//商品详情
+// ShowProduct
+//  @Description: 商品详情接口
 func ShowProduct(c *gin.Context) {
 	showProductService := service.ProductService{}
 	res := showProductService.Show(c.Request.Context(), c.Param("id"))
@@ -61,25 +62,26 @@ func UpdateProduct(c *gin.Context) {
 	}
 }
 
-//搜索商品
+// SearchProducts
+//  @Description: 搜索商品
 func SearchProducts(c *gin.Context) {
 	searchProductsService := service.ProductService{}
-	if err := c.ShouldBind(&searchProductsService); err == nil {
-		res := searchProductsService.Search(c.Request.Context())
-		c.JSON(200, res)
-	} else {
+	if err := c.ShouldBind(&searchProductsService); err != nil {
 		c.JSON(400, ErrorResponse(err))
 		util.LogrusObj.Infoln(err)
 	}
+	res := searchProductsService.Search(c.Request.Context())
+	c.JSON(200, res)
 }
 
+// ListProductImg
+//  @Description: 商品图片接口
 func ListProductImg(c *gin.Context) {
 	var listProductImgService service.ListProductImgService
-	if err := c.ShouldBind(&listProductImgService); err == nil {
-		res := listProductImgService.List(c.Request.Context(), c.Param("id"))
-		c.JSON(200, res)
-	} else {
+	if err := c.ShouldBind(&listProductImgService); err != nil {
 		c.JSON(400, ErrorResponse(err))
 		util.LogrusObj.Infoln(err)
 	}
+	res := listProductImgService.List(c.Request.Context(), c.Param("id"))
+	c.JSON(200, res)
 }

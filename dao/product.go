@@ -28,6 +28,7 @@ func (dao *ProductDao) GetProductById(id uint) (product *model.Product, err erro
 
 // ListProductByCondition 获取商品列表
 func (dao *ProductDao) ListProductByCondition(condition map[string]interface{}, page model.BasePage) (products []*model.Product, err error) {
+	// 分页查询商品
 	err = dao.DB.Where(condition).
 		Offset((page.PageNum - 1) * page.PageSize).
 		Limit(page.PageSize).Find(&products).Error
@@ -39,7 +40,7 @@ func (dao *ProductDao) CreateProduct(product *model.Product) error {
 	return dao.DB.Model(&model.Product{}).Create(&product).Error
 }
 
-// CountProductByCondition 根据情况获取商品的数量
+// CountProductByCondition 获取符合条件的商品总数
 func (dao *ProductDao) CountProductByCondition(condition map[string]interface{}) (total int64, err error) {
 	err = dao.DB.Model(&model.Product{}).Where(condition).Count(&total).Error
 	return

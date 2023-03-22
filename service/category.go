@@ -11,6 +11,8 @@ import (
 type ListCategoriesService struct {
 }
 
+// List
+//  @Description: 分类列表服务
 func (service *ListCategoriesService) List(ctx context.Context) serializer.Response {
 	code := e.SUCCESS
 	categoryDao := dao.NewCategoryDao(ctx)

@@ -60,11 +60,6 @@ func (service *ProductService) Show(ctx context.Context, id string) serializer.R
 
 // Create
 //  @Description: 创建商品服务
-//  @receiver service
-//  @param ctx
-//  @param uId
-//  @param files
-//  @return serializer.Response
 func (service *ProductService) Create(ctx context.Context, uId uint, files []*multipart.FileHeader) serializer.Response {
 	var boss *model.User
 	var err error
@@ -188,7 +183,8 @@ func (service *ProductService) List(ctx context.Context) serializer.Response {
 	return serializer.BuildListResponse(serializer.BuildProducts(products), uint(total))
 }
 
-// 删除商品
+// Delete
+//  @Description: 删除商品
 func (service *ProductService) Delete(ctx context.Context, pId string) serializer.Response {
 	code := e.SUCCESS
 

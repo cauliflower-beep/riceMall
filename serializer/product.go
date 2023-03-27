@@ -45,7 +45,8 @@ func BuildProduct(item *model.Product) Product {
 	}
 }
 
-// 序列化商品列表
+// BuildProducts
+//  @Description: 序列化商品列表
 func BuildProducts(items []*model.Product) (products []Product) {
 	for _, item := range items {
 		product := BuildProduct(item)

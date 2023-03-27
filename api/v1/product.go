@@ -43,14 +43,16 @@ func ShowProduct(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-//删除商品
+// DeleteProduct
+//  @Description: 删除商品接口
 func DeleteProduct(c *gin.Context) {
 	deleteProductService := service.ProductService{}
 	res := deleteProductService.Delete(c.Request.Context(), c.Param("id"))
 	c.JSON(200, res)
 }
 
-//更新商品
+// UpdateProduct
+//  @Description: 更新商品接口
 func UpdateProduct(c *gin.Context) {
 	updateProductService := service.ProductService{}
 	if err := c.ShouldBind(&updateProductService); err == nil {

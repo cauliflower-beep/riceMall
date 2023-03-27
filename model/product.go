@@ -24,7 +24,8 @@ type Product struct {
 	BossAvatar    string
 }
 
-// View 获取点击数
+// View
+//  @Description: 获取点击数
 func (product *Product) View() uint64 {
 	countStr, _ := cache.RedisClient.Get(cache.ProductViewKey(product.ID)).Result()
 	count, _ := strconv.ParseUint(countStr, 10, 64)

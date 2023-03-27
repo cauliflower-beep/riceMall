@@ -34,7 +34,7 @@ func NewRouter() *gin.Engine {
 		v1.POST("user/login", api.UserLogin)
 
 		// 商品操作
-		v1.GET("products", api.ListProducts)
+		v1.GET("products", api.ListProducts) // 商品列表
 		v1.GET("product/:id", api.ShowProduct)
 		v1.POST("products", api.SearchProducts)
 		v1.GET("imgs/:id", api.ListProductImg)   // 商品图片

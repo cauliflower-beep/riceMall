@@ -10,6 +10,8 @@ const (
 	RankKey = "rank"
 )
 
+// ProductViewKey
+//  @Description: 商品点击数的key
 func ProductViewKey(id uint) string {
 	return fmt.Sprintf("view:product:%s", strconv.Itoa(int(id)))
 }

@@ -151,7 +151,6 @@ func (service *ProductService) Create(ctx context.Context, uId uint, files []*mu
 //  @return serializer.Response
 func (service *ProductService) List(ctx context.Context) serializer.Response {
 	var products []*model.Product
-	var total int64
 	code := e.SUCCESS
 
 	if service.PageSize == 0 {

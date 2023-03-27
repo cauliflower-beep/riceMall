@@ -40,7 +40,7 @@ func (dao *ProductDao) CreateProduct(product *model.Product) error {
 	return dao.DB.Model(&model.Product{}).Create(&product).Error
 }
 
-// CountProductByCondition 获取符合条件的商品总数
+// CountProductByCondition 依据条件获取商品总数
 func (dao *ProductDao) CountProductByCondition(condition map[string]interface{}) (total int64, err error) {
 	err = dao.DB.Model(&model.Product{}).Where(condition).Count(&total).Error
 	return

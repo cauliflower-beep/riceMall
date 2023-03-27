@@ -26,7 +26,8 @@ type TrackedErrorResponse struct {
 	TrackID string `json:"track_id"`
 }
 
-//BulidListResponse 带有总数的列表构建器
+// BuildListResponse
+//  @Description: 带有总数的列表构建器
 func BuildListResponse(items interface{}, total uint) Response {
 	return Response{
 		Status: 200,
